@@ -1,0 +1,70 @@
+/* Reset default margins and paddings for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apply some basic styles to the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Style the breed selection dropdown */
+.breed-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Style the loader element */
+.loader {
+    display: none;
+    /* Initially hidden */
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Style the error message */
+.error {
+    display: none;
+    /* Initially hidden */
+    text-align: center;
+    font-weight: bold;
+    color: #ff0000;
+    /* Red color for error messages */
+    margin-top: 20px;
+}
+
+/* Style the cat information container */
+.cat-info {
+    display: none;
+    /* Initially hidden */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the cat information text */
+.cat-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Style the cat image */
+.cat-info img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+

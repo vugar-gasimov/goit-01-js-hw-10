@@ -1,10 +1,8 @@
-
 import axios from "axios";
-import { fetchBreeds, fetchCatByBreed } from "./js/cat-api";
+import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
-import 'notiflix';
-import 'notiflix/src/notiflix.css';
+import Notiflix from 'notiflix';
 
 axios.defaults.headers.common["x-api-key"] = "01941b135f914f4eba82ad58b4ea1060";
 
@@ -17,57 +15,92 @@ const slim = new SlimSelect(breedSelect, {
   placeholder: 'Select a breed',
 });
 
-function updateCatInfo(cat) {
-  // Display cat information in the UI
-  const { name, description, temperament } = cat.breeds[0];
-  catInfo.innerHTML = `
-    <h2>${name}</h2>
-    <p>Description: ${description}</p>
-    <p>Temperament: ${temperament}</p>
-    <img src="${cat.url}" alt="${name}" />
-  `;
-  catInfo.style.display = 'block';
+breedSelect.addEventListener('change', OnSelectChange);
+
+loader.classList.remove('visually-hidden');
+
+function OnSelectChange(e) {
+    const breedsId = e.target.value;
+
+    breedSelect.classList.add('visually-hidden');
+    loader.classList.remove('visually-hidden');
+    errorElement.classList.add('visually-hidden');
+    catInfo.classList.add('visually-hidden');
+    
+    fetchCatByBreed(breedsId)
+        .then(data => {
+            const { url } = data[0];
+            const breedInfo = data[0].breeds[0];
+            const { name, description, temperament } = breedInfo;
+
+            const markup = `
+            <img src="${url}" alt="${name}"}/>
+            <h3>${name}</h3>
+            <p>${description}</p>
+            <p>${temperament}</p>`;
+
+            catInfo.innerHTML = markup;
+
+            breedSelect.classList.remove('visually-hidden');
+            loader.classList.add('visually-hidden');
+            catInfo.classList.remove('visually-hidden');
+        })
+        .catch(error => {
+            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!',
+                {
+                    closeButton: true,
+                    cssAnimationStyle: 'from-top',
+                    timeout: 3000,
+                });
+            breedSelect.classList.remove('visually-hidden');
+            loader.classList.add('visually-hidden');
+            errorElement.classList.add('visually-hidden');
+            catInfo.classList.add('visually-hidden');
+        });
 }
 
-// Event listener for breed selection change
-breedSelect.addEventListener('change', (event) => {
-  const selectedBreedId = event.target.value;
+fetchBreeds()
+    .then(res => {
+        const markup = res.map(el => {
+            return `<option value="${el.id}">${el.name}</option>`;
+        }).join('');
 
-  // Clear previous cat information
-  catInfo.innerHTML = '';
-  catInfo.style.display = 'none';
+        breedSelect.innerHTML = markup;
 
-  // Show loader while fetching cat data
-  loader.style.display = 'block';
+        loader.classList.add('visually-hidden');
+        breedSelect.classList.remove('visually-hidden');
 
-  // Fetch cat information by breed ID
-  fetchCatByBreed(selectedBreedId)
-    .then((catData) => {
-      updateCatInfo(catData);
-
-      // Hide loader after request is complete
-      loader.style.display = 'none';
-    })
-    .catch((error) => {
-      // Handle errors and display error message
-      console.error('Error fetching cat by breed:', error);
-
-      // Hide loader and display error element
-      loader.style.display = 'none';
-      errorElement.style.display = 'block';
+    }).catch(error => {
+        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!',
+            {
+                closeButton: true,
+                ccsAnimationStyle: 'from-top',
+                timeout: 3000,
+            });
+        errorElement.classList.add('visually-hidden');
+        breedSelect.classList.add('visually-hidden');
+    }).finally(() => {
+        loader.classList.add('visually-hidden');
     });
-});
 
-// Initial fetch of breeds when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-  // Fetch breeds and populate the breed dropdown
-  fetchBreeds()
-    .then((breeds) => {
-      slim.setData(breeds.map((breed) => ({ text: breed.name, value: breed.id })));
-    })
-    .catch((error) => {
-      // Handle errors and display error message
-      console.error('Error fetching breeds:', error);
-      errorElement.style.display = 'block';
-    });
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
