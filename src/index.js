@@ -1,10 +1,9 @@
-import axios from "axios";
-import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
+import { fetchBreedImgs, fetchBreeds } from './js/cat-api';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
 import Notiflix from 'notiflix';
 
-axios.defaults.headers.common["x-api-key"] = "01941b135f914f4eba82ad58b4ea1060";
+
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
@@ -27,7 +26,7 @@ function OnSelectChange(e) {
     errorElement.classList.add('visually-hidden');
     catInfo.classList.add('visually-hidden');
     
-    fetchCatByBreed(breedsId)
+    fetchBreedImgs(breedsId)
         .then(data => {
             const { url } = data[0];
             const breedInfo = data[0].breeds[0];
@@ -63,7 +62,7 @@ fetchBreeds()
     .then(res => {
         const markup = res.map(el => {
             return `<option value="${el.id}">${el.name}</option>`;
-        }).join('');
+        }).join("");
 
         breedSelect.innerHTML = markup;
 
@@ -82,25 +81,3 @@ fetchBreeds()
     }).finally(() => {
         loader.classList.add('visually-hidden');
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
