@@ -28,29 +28,36 @@ function OnSelectChange(e) {
     
     fetchBreedImgs(breedsId)
         .then(data => {
-            const { url } = data[0];
-            const breedInfo = data[0].breeds[0];
-            const { name, description, temperament } = breedInfo;
+           if (data.length > 0) {
+                const { url } = data[0];
+                const breedInfo = data[0].breeds[0];
+                const { name, description, temperament } = breedInfo;
 
-            const markup = `
-            <img src="${url}" alt="${name}"}/>
-            <h3>${name}</h3>
-            <p>${description}</p>
-            <p>${temperament}</p>`;
+                const markup = `
+                <img src="${url}" alt="${name}"}/>
+                <h3>${name}</h3>
+                <p>${description}</p>
+                <p>${temperament}</p>`;
 
-            catInfo.innerHTML = markup;
+                catInfo.innerHTML = markup;
 
-            breedSelect.classList.remove('visually-hidden');
-            loader.classList.add('visually-hidden');
-            catInfo.classList.remove('visually-hidden');
+                breedSelect.classList.remove('visually-hidden');
+                loader.classList.add('visually-hidden');
+                catInfo.classList.remove('visually-hidden');
+            } else {
+                Notiflix.Notify.failure('No images found for this breed.');
+                breedSelect.classList.remove('visually-hidden');
+                loader.classList.add('visually-hidden');
+                errorElement.classList.add('visually-hidden');
+                catInfo.classList.add('visually-hidden');
+            }
         })
         .catch(error => {
-            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!',
-                {
-                    closeButton: true,
-                    cssAnimationStyle: 'from-top',
-                    timeout: 3000,
-                });
+            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!', {
+                closeButton: true,
+                cssAnimationStyle: 'from-top',
+                timeout: 3000,
+            });
             breedSelect.classList.remove('visually-hidden');
             loader.classList.add('visually-hidden');
             errorElement.classList.add('visually-hidden');
@@ -70,12 +77,11 @@ fetchBreeds()
         breedSelect.classList.remove('visually-hidden');
 
     }).catch(error => {
-        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!',
-            {
-                closeButton: true,
-                ccsAnimationStyle: 'from-top',
-                timeout: 3000,
-            });
+        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!', {
+            closeButton: true,
+            cssAnimationStyle: 'from-top',
+            timeout: 3000,
+        });
         errorElement.classList.add('visually-hidden');
         breedSelect.classList.add('visually-hidden');
     }).finally(() => {
