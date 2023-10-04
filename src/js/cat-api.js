@@ -1,7 +1,7 @@
 
 // Define the base URL and API key for The Cat API
 const BASE_URL = 'https://api.thecatapi.com/v1';
-const API_KEY = '01941b135f914f4eba82ad58b4ea1060';
+const API_KEY = 'live_oEvQ1sP1tGC3ckFuyx9hqr0pWeUXXp3OCENzWXqOKiZhL4nVFLGEN4a3JFZJxbmb';
 
 
 // Define options with headers including the API key

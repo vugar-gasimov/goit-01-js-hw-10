@@ -102,25 +102,6 @@ fetchBreeds()
     // Hide the loader and show the breed selection
     loader.classList.add('visually-hidden');
     breedSelect.classList.remove('visually-hidden');
-
-    //   // Create the HTML markup for breed options and populate the dropdown
-    // const markup = res.map(el => {
-    //     return `<option value="${el.id}">${el.name}</option>`;
-    // }).join("");
-
-    // breedSelect.innerHTML = markup;
-
-    // // Here, add the code to dynamically populate the select options
-    // res.forEach(breed => {
-    //   const option = document.createElement('option');
-    //   option.value = breed.id;
-    //   option.textContent = breed.name;
-    //   breedSelect.appendChild(option);
-    // });
-
-    // // Hide the loader and show the breed selection
-    // loader.classList.add('visually-hidden');
-    // breedSelect.classList.remove('visually-hidden');
   })
   .catch(error => {
     // Handle errors by showing a notification to the user
