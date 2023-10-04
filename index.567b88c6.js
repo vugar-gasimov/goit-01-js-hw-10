@@ -6,11 +6,12 @@ let i=e.target.value;// Hide elements and show loader while fetching data
 l.classList.add("visually-hidden"),c.classList.remove("visually-hidden"),d.classList.add("visually-hidden"),m.classList.add("visually-hidden"),fetch(`${o}/images/search?breed_ids=${i}`,r).then(t=>{// Check if the response is okay (status code 200)
 if(!t.ok)throw Error(t.status);// Parse the JSON response and return it
 return t.json()}).then(e=>{// Check if data has images
-if(e.length>0){let{url:t}=e[0],i=e[0].breeds[0],{name:a,description:n,temperament:s}=i,o=`
-                <img src="${t}" alt="${a}"/>
-                <h3>${a}</h3>
-                <p>${n}</p>
-                <p>${s}</p>`;// Update the catInfo section with the markup
+if(console.log(e),e.length>0){let{url:t}=e[0],i=e[0].breeds[0],{name:a,description:n,temperament:s}=i,o=`
+        <img src="${t}" alt="${a}"/>
+        <h3>${a}</h3>
+        <p>Description: ${n}</p>
+        <p>Temperament: ${s}</p>
+      `;// Set the HTML markup to the catInfo section
 m.innerHTML=o,// Show the breed selection and hide the loader and error
 l.classList.remove("visually-hidden"),c.classList.add("visually-hidden"),m.classList.remove("visually-hidden")}else /*@__PURE__*/t(s).Notify.failure("No images found for this breed."),// Show the breed selection and hide the loader and error
 l.classList.remove("visually-hidden"),c.classList.add("visually-hidden"),d.classList.add("visually-hidden"),m.classList.add("visually-hidden")}).catch(e=>{/*@__PURE__*/t(s).Notify.failure("Oops! Something went wrong! Try reloading the page!",{closeButton:!0,cssAnimationStyle:"from-top",timeout:3e3}),// Show the breed selection and hide the loader and error
@@ -19,8 +20,23 @@ c.classList.remove("visually-hidden"),fetch(`${o}/breeds`,r).then(t=>{// Check i
 if(!t.ok)throw Error(t.status);// Parse the JSON response and return it
 return t.json()}).then(t=>{// Create the HTML markup for breed options and populate the dropdown
 let e=t.map(t=>`<option value="${t.id}">${t.name}</option>`).join("");l.innerHTML=e,// Hide the loader and show the breed selection
-c.classList.add("visually-hidden"),l.classList.remove("visually-hidden")}).catch(e=>{/*@__PURE__*/t(s).Notify.failure("Oops! Something went wrong! Try reloading the page!",{closeButton:!0,cssAnimationStyle:"from-top",timeout:3e3}),// Hide the error element and breed selection
+c.classList.add("visually-hidden"),l.classList.remove("visually-hidden");//   // Create the HTML markup for breed options and populate the dropdown
+// const markup = res.map(el => {
+//     return `<option value="${el.id}">${el.name}</option>`;
+// }).join("");
+// breedSelect.innerHTML = markup;
+// // Here, add the code to dynamically populate the select options
+// res.forEach(breed => {
+//   const option = document.createElement('option');
+//   option.value = breed.id;
+//   option.textContent = breed.name;
+//   breedSelect.appendChild(option);
+// });
+// // Hide the loader and show the breed selection
+// loader.classList.add('visually-hidden');
+// breedSelect.classList.remove('visually-hidden');
+}).catch(e=>{/*@__PURE__*/t(s).Notify.failure("Oops! Something went wrong! Try reloading the page!",{closeButton:!0,cssAnimationStyle:"from-top",timeout:3e3}),// Hide the error element and breed selection
 d.classList.remove("visually-hidden"),l.classList.add("visually-hidden")}).finally(()=>{// Hide the loader after fetching breeds
-c.classList.add("visually-hidden")})}();//# sourceMappingURL=index.6f868376.js.map
+c.classList.add("visually-hidden")})}();//# sourceMappingURL=index.567b88c6.js.map
 
-//# sourceMappingURL=index.6f868376.js.map
+//# sourceMappingURL=index.567b88c6.js.map
